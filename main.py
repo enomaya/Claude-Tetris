@@ -1,4 +1,5 @@
 import sys
+import asyncio
 import pygame
 
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT, FPS, DAS_DELAY, ARR_INTERVAL
@@ -7,7 +8,7 @@ from data.db import init_db, insert_score, clear_scores
 from ui.renderer import Renderer
 
 
-def main() -> None:
+async def main() -> None:
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption('PyTetris')
@@ -172,6 +173,8 @@ def main() -> None:
         renderer.menu_cursor = menu_cursor
         renderer.draw(gm)
 
+        await asyncio.sleep(0)  # Pygbag: 브라우저에 제어권 반환
+
     pygame.quit()
     sys.exit()
 
@@ -200,4 +203,4 @@ def _toggle_bgm(muted: bool) -> bool:
 
 
 if __name__ == '__main__':
-    main()
+    asyncio.run(main())
